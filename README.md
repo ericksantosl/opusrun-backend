@@ -50,8 +50,6 @@ Retorna todas as tarefas cadastradas.
 GET /task
 ```
 
-Não é necessário enviar parâmetros ou corpo da requisição.
-
 ---
 
 ### 3. Marcar uma tarefa como concluída
