@@ -8,12 +8,89 @@ API REST para gerenciamento de tarefas, permitindo criar, listar, concluir e exc
 * Express
 * Prisma ORM
 
+
+## Rotas
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/task` | Criar uma tarefa |
+| GET | `/task` | Listar todas as tarefas |
+| PATCH | `/task/:id` | Marcar tarefa como concluída |
+| DELETE | `/task/:id` | Excluir uma tarefa |
+
 ## Funcionalidades
 
-* Criar uma nova tarefa.
-* Listar todas as tarefas cadastradas.
-* Marcar uma tarefa como concluída.
-* Excluir uma tarefa.
+### 1. Criar uma nova tarefa
+
+Cria uma nova tarefa no banco de dados.
+
+**Requisição:**
+
+```http
+POST /task
+```
+
+**Body:**
+
+```json
+{
+  "titulo": "Estudar Prisma"
+}
+```
+
+---
+
+### 2. Listar todas as tarefas
+
+Retorna todas as tarefas cadastradas.
+
+**Requisição:**
+
+```http
+GET /task
+```
+
+Não é necessário enviar parâmetros ou corpo da requisição.
+
+---
+
+### 3. Marcar uma tarefa como concluída
+
+Atualiza o status de uma tarefa para concluída.
+
+**Requisição:**
+
+```http
+PATCH /task/:id
+```
+
+É necessário informar o **ID** da tarefa na URL.
+
+**Exemplo:**
+
+```http
+PATCH /task/3
+```
+
+---
+
+### 4. Excluir uma tarefa
+
+Remove uma tarefa do banco de dados.
+
+**Requisição:**
+
+```http
+DELETE /task/:id
+```
+
+É necessário informar o **ID** da tarefa na URL.
+
+**Exemplo:**
+
+```http
+DELETE /task/3
+```
 
 ## Como executar
 
@@ -22,6 +99,7 @@ API REST para gerenciamento de tarefas, permitindo criar, listar, concluir e exc
 3. Crie um arquivo `.env` e configure as variáveis `PORT` e `DATABASE_URL`. Por padrão, o projeto utiliza PostgreSQL.
 4. Execute as migrações do Prisma com `npx prisma migrate dev`.
 5. Inicie o servidor.
+
 
 ## Autor
 
