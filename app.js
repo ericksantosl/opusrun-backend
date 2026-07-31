@@ -1,5 +1,6 @@
 import express from 'express';
 import taskRoutes from './routes/taskRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ app.get('/version', (req, res) => {
 });
 
 app.use('/task', taskRoutes);
+app.use('/auth', authRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}.`);
