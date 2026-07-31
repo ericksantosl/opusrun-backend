@@ -16,4 +16,16 @@ model Task {
   id      Int    @id @default(autoincrement())
   titulo  String
   status  Int
+  userId  Int
+
+  user    User   @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  email    String
+  senha    String
+
+  tasks    Task[]
 }
