@@ -75,3 +75,58 @@ export const register = async (req, res) => {
     }
 
 }
+
+export const login = async (req, res) => {
+    const { email, senha } = req.body;
+
+    if (!email || email.trim() === '') {
+        return res.status(400).json({
+            erro: 'Email é obrigatório.'
+        })
+    }
+
+    if (!senha) {
+        return res.status(400).json({
+            erro: 'Senha é obrigatória.'
+        });
+    }
+
+    try {
+
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        });
+
+        if (!user) {
+            return res.status(401).json({
+                erro: 'Credenciais inválidas.'
+            });
+        }
+
+        const senhaValida = await bcrypt.compare(senha, user.senha);
+
+        if (!senhaValida) {
+            return res.status(401).json({
+                erro: 'Credenciais inválidas'
+            });
+        }
+
+        return res.status(200).json({
+            success: 'Login realizado com sucesso.',
+            user: {
+                id: user.id,
+                nome: user.nome,
+                email: user.email
+            }
+        });
+        
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            erro: 'Erro ao realizar login'
+        })
+    }
+}
