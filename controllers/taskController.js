@@ -1,8 +1,14 @@
 import { prisma } from "../prisma/prisma.js"
 
 export const listTasks = async (req, res) => {
+    const userId = req.session.userId;
+
     try {
-        const tasks = await prisma.task.findMany();
+        const tasks = await prisma.task.findMany({
+            where: {
+                userId
+            }
+        });
 
         return res.status(200).json(tasks);
 
@@ -15,6 +21,7 @@ export const listTasks = async (req, res) => {
 
 export const createTask = async (req, res) => {
     const { titulo } = req.body;
+    const userId = req.session.userId;
 
     if (!titulo || titulo.trim() === "") {
         return res.status(400).json({
@@ -27,7 +34,8 @@ export const createTask = async (req, res) => {
         const task = await prisma.task.create({
             data: {
                 titulo,
-                status: 0
+                status: 0,
+                userId
             }
         });
 
@@ -42,6 +50,7 @@ export const createTask = async (req, res) => {
 
 export const completeTask = async (req, res) => {
     const { id } = req.params;
+    const userId = req.session.userId;
 
     if (isNaN(Number(id))) {
         return res.status(400).json({
@@ -50,9 +59,10 @@ export const completeTask = async (req, res) => {
     }
 
     try {
-        const task = await prisma.task.findUnique({
+        const task = await prisma.task.findFirst({
             where: {
-                id: Number(id)
+                id: Number(id),
+                userId
             }
         });
 
@@ -84,6 +94,7 @@ export const completeTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
     const { id } = req.params;
+    const userId = req.session.userId;
 
     if (isNaN(Number(id))) {
         return res.status(400).json({
@@ -92,9 +103,10 @@ export const deleteTask = async (req, res) => {
     }
 
     try {
-        const task = await prisma.task.findUnique({
+        const task = await prisma.task.findFirst({
             where: {
-                id: Number(id)
+                id: Number(id),
+                userId
             }
         });
 

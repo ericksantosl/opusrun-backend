@@ -133,3 +133,10 @@ export const login = async (req, res) => {
         })
     }
 }
+
+export const logout = (req, res) => {
+    req.session.destroy();
+    res.json({
+        mensagem: 'Logout realizado'
+    });
+}
