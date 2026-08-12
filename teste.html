@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste CORS</title>
+</head>
+<body>
+
+<button id="teste">Testar API</button>
+
+<script>
+    document.getElementById("teste").addEventListener("click", async () => {
+        try {
+            const response = await fetch("http://localhost:3000/version");
+
+            const data = await response.json();
+
+            console.log("Sucesso:", data);
+        } catch (error) {
+            console.error("Erro:", error);
+        }
+    });
+</script>
+
+</body>
+</html>
