@@ -116,6 +116,8 @@ export const login = async (req, res) => {
         req.session.userId = user.id;
         req.session.userName = user.nome;
 
+        console.log('Sessão criada:', req.session);
+
         return res.status(200).json({
             success: 'Login realizado com sucesso.',
             user: {
