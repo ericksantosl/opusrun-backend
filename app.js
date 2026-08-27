@@ -34,6 +34,9 @@ app.get('/version', (req, res) => {
 });
 
 app.get('/me', (req, res) => {
+    console.log('Sessão recebida no /me:', req.session);
+    console.log('Session ID:', req.sessionID);
+
     return res.json(req.session);
 });
 
